@@ -6,7 +6,8 @@ App to check for affects of weekly DNAnexus updates
 
 ## What are typical use cases for this app?
 
-Used to evaluate if any changes from weekly DNAnexus updates affect functioning of Sentieon germline FASTQ to VCF
+Used to evaluate if any changes from weekly DNAnexus updates affect functioning of Sentieon germline FASTQ to VCF.
+Should be run in conjunction with Sentieon germline FASTQ to VCF from the same FASTQs as the previously generated VCF against which to check.
 
 
 ## What data are required for this app to run?
