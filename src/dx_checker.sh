@@ -12,7 +12,7 @@ main() {
     mkdir -p out/check_output
 
     # check for differences in variants of original VCF and newly generated VCF
-    diff -d -I '^#' -I '^ #' <(cat $truth_vcf | cut -f 1,2,3,4,5) <(cat $query_vcf | cut -f 1,2,3,4,5) > vcf_diff.txt
+    diff -d -I '^#' truth_vcf query_vcf > vcf_diff.txt
 
     if [ -s vcf_diff.txt ]; then
         # diff found
