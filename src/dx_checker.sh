@@ -35,11 +35,11 @@ main() {
     if [ -s vcf_diff.txt ]; then
         # diff found
         echo "VCFs differ"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "dx checker alert: difference identified in Sentieon output."
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "❗ dx checker alert: differences identified in Sentieon output ❗"
     else
         # no diff found
         echo "No difference in VCFs found"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "dx checker update: no differences identified."
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "✅ dx checker update: no differences identified"
     fi
 
     # add diff file to out for uploading
