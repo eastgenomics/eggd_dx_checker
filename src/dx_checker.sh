@@ -28,11 +28,8 @@ main() {
     # unzip hermes for Slack notifications
     unzip hermes-*
 
-    echo "all files"
-    ls
-
     # check for differences in variants of original VCF and newly generated VCF
-    diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt
+    diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt || true
 
     echo "checking"
     if [ -s vcf_diff.txt ]; then
