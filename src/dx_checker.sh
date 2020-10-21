@@ -3,14 +3,13 @@
 
 main() {
 
+    # download, unzip and rename truth VCF then query
+    # seperate to allow 2 VCFs with same name being downloaded
     dx download "$truth_vcf"
+    gunzip "$truth_vcf_name" && unzipped=${truth_vcf_name/.gz/} && mv $unzipped truth_vcf
+
     dx download "$query_vcf"
-
-    gunzip "$truth_vcf_name" && truth_vcf=${truth_vcf_name/.gz/}
-    gunzip "$query_vcf_name" && query_vcf=${query_vcf_name/.gz/}
-
-    echo "truth vcf: $truth_vcf"
-    echo "query_vcf: $query_vcf"
+    gunzip "$query_vcf_name" && unzipped=${query_vcf_name/.gz/} && mv $unzipped query_vcf
 
     # output dir for uploading diff output
     mkdir -p out/check_output
@@ -35,7 +34,7 @@ main() {
     exit=0
 
     # check for differences in variants of original VCF and newly generated VCF
-    diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt || exit=$?
+    diff -d -I '^#' truth_vcf query_vcf > vcf_diff.txt || exit=$?
     echo "exit code: $exit"
 
     if [[ $exit -eq 0 ]]; then
