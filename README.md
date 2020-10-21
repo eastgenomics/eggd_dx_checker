@@ -2,7 +2,8 @@
 
 ## What does this app do?
 
-App to check for affects of weekly DNAnexus updates
+App to check for affects of weekly DNAnexus updates.
+
 
 ## What are typical use cases for this app?
 
@@ -17,8 +18,8 @@ A "truth" previously generated VCF and the newly generated VCF from running Sent
 
 ## What does this app output?
 
-If no differences are found, an empty `vcf_diff.txt` file is output.
-If differences are found, `vcf_diff.txt` is output containing the differences.
+If no differences are found, an empty `vcf_diff.txt` file is output and a notification sent to egg-logs Slack channel.
+If differences are found, `vcf_diff.txt` is output containing the differences and a notification sent to egg-alerts Slack channel.
 
 
 ### This app was made by EMEE GLH
