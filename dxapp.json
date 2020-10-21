@@ -4,7 +4,8 @@
   "summary": "App to check for affects of weekly DNAnexus updates",
   "dxapi": "1.0.0",
   "properties": {
-    "githubRelease": "v1.0.0"
+    "githubRelease": "v1.0.0",
+    "hermesRelease": "v1.1.0"
   },
   "inputSpec": [
     {
