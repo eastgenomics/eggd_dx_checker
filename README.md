@@ -2,7 +2,7 @@
 
 ## What does this app do?
 
-App to check for affects of weekly DNAnexus updates.
+App to check for effects of weekly DNAnexus updates.
 
 ## What are typical use cases for this app?
 
