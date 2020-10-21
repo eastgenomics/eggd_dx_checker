@@ -28,18 +28,24 @@ main() {
     # unzip hermes for Slack notifications
     unzip hermes-*
 
-    # check for differences in variants of original VCF and newly generated VCF
-    diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt || true
+    # set exit var to check diff exit code against
+    exit=0
 
-    echo "checking"
-    if [ -s vcf_diff.txt ]; then
+    # check for differences in variants of original VCF and newly generated VCF
+    diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt || exit=$?
+
+    if [ $exit==0 ]; then
+        # no diff found
+        echo "No difference in VCFs found"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "✅ dx checker update: no differences identified"
+    elif [ $exit==1 ]; then
         # diff found
         echo "VCFs differ"
         ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "❗ dx checker alert: differences identified in Sentieon output ❗"
     else
-        # no diff found
-        echo "No difference in VCFs found"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "✅ dx checker update: no differences identified"
+        # exit code not 0 or 1 => issue with command
+        echo "Issue with diff command"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "❗ dx checker alert: diff command has exit code $exit, check the job logs for details. ❗"
     fi
 
     # add diff file to out for uploading
@@ -48,3 +54,4 @@ main() {
     # upload output files
     dx-upload-all-outputs
 }
+
