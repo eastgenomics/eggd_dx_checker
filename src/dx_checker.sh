@@ -9,6 +9,9 @@ main() {
     gunzip "$truth_vcf_name" && truth_vcf=${truth_vcf_name/.gz/}
     gunzip "$query_vcf_name" && query_vcf=${query_vcf_name/.gz/}
 
+    echo "truth vcf: $truth_vcf"
+    echo "query_vcf: $query_vcf"
+
     # output dir for uploading diff output
     mkdir -p out/check_output
 
@@ -43,12 +46,12 @@ main() {
     elif [[ $exit -eq 1 ]]; then
         # diff found
         echo "VCFs differ"
-        message="❗ Weekly dx integrity checker alert: differences identified in Sentieon output ❗"
+        message="❗ Weekly dx integrity check alert: differences identified in Sentieon output ❗"
         ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
     else
         # exit code not 0 or 1 => issue with command
         echo "Issue with diff command"
-        message="❗ Weekly dx integrity checker alert: diff command has exit code $exit, check the job logs for details. ❗"
+        message="❗ Weekly dx integrity check alert: diff command has exit code $exit, check the job logs for details. ❗"
         ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
     fi
 
@@ -58,4 +61,3 @@ main() {
     # upload output files
     dx-upload-all-outputs
 }
-
