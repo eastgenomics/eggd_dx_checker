@@ -33,19 +33,23 @@ main() {
 
     # check for differences in variants of original VCF and newly generated VCF
     diff -d -I '^#' $truth_vcf $query_vcf > vcf_diff.txt || exit=$?
+    echo "exit code: $exit"
 
-    if [ $exit==0 ]; then
+    if [[ $exit -eq 0 ]]; then
         # no diff found
         echo "No difference in VCFs found"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "✅ dx checker update: no differences identified"
-    elif [ $exit==1 ]; then
+        message="Weekly dx integrity check notifier: no differences identified ✅"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-logs"
+    elif [[ $exit -eq 1 ]]; then
         # diff found
         echo "VCFs differ"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "❗ dx checker alert: differences identified in Sentieon output ❗"
+        message="❗ Weekly dx integrity checker alert: differences identified in Sentieon output ❗"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
     else
         # exit code not 0 or 1 => issue with command
         echo "Issue with diff command"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "❗ dx checker alert: diff command has exit code $exit, check the job logs for details. ❗"
+        message="❗ Weekly dx integrity checker alert: diff command has exit code $exit, check the job logs for details. ❗"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
     fi
 
     # add diff file to out for uploading
