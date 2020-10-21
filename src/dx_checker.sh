@@ -41,17 +41,17 @@ main() {
         # no diff found
         echo "No difference in VCFs found"
         message="Weekly dx integrity check notifier: no differences identified ✅"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-logs"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py -v msg "$message" ~/slack_token.txt "egg-logs"
     elif [[ $exit -eq 1 ]]; then
         # diff found
         echo "VCFs differ"
         message="❗ Weekly dx integrity check alert: differences identified in Sentieon output ❗"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg -v "$message" ~/slack_token.txt "egg-alerts"
     else
         # exit code not 0 or 1 => issue with command
         echo "Issue with diff command"
         message="❗ Weekly dx integrity check alert: diff command has exit code $exit, check the job logs for details. ❗"
-        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg "$message" ~/slack_token.txt "egg-alerts"
+        ~/miniconda3/bin/python "$hermes_dir"/hermes.py msg -v "$message" ~/slack_token.txt "egg-alerts"
     fi
 
     # add diff file to out for uploading
